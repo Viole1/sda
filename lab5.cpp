@@ -76,7 +76,7 @@ public:
     }
     void output() {
         node* current = first;
-        while (current) {
+        while (current->next->next) {
             cout << current->data << ' ';
             current = current->next;
         }
@@ -114,9 +114,13 @@ public:
     }
     string pop_back() {
         node* current = first;
-        while (current->next->next->next != NULL) current = current->next;
+        //while (current->next->next->next != NULL) current = current->next;
+        while (current->next->next != NULL) current = current->next;
         string result = current->data;
         remove_after(result);
+        node* tmp = current;
+        delete tmp->next;
+        current->next = NULL;
 
         return  result;
         
@@ -153,6 +157,11 @@ public:
     void setLength(size_t n) {
         length = n;
     }
+    node* getLast() {
+        node* current = first;
+        while (current->next->next) current = current->next;
+        return current;
+    }
 };
 
 int main(int argc, char const* argv[]){
@@ -166,6 +175,7 @@ int main(int argc, char const* argv[]){
     l.merge_sorted(l);
 
     l.output();
+    cout << l.getLast()->data << ' ';
 
     l.insert_after("c", "d");
 
